@@ -45,13 +45,19 @@ RUN apt-get install -y \
 	curl \
 	git \
 	python \
+    sudo \
 	tmux \
 	wget \
 	zsh
 
 # 创建非root用户
 RUN groupadd --gid 1000 $NON_ROOT \
-	&& useradd --uid 1000 --gid $NON_ROOT --shell /bin/bash --create-home $NON_ROOT
+	&& useradd --uid 1000 --gid $NON_ROOT --shell /bin/bash --create-home $NON_ROOT \
+# 使用和用户名一样的密码
+    && echo "$NON_ROOT:$NON_ROOT" | chpasswd \
+# 加入 sudo 权限
+# 设置root密码：$ sudo passwd root
+	&& adduser $NON_ROOT sudo
 
 # 安装gosu，方便后面以非root用户执行指令
 #ENV GOSU_VERSION 1.10
