@@ -36,10 +36,11 @@ RUN rm /tmp/sources.list
 RUN apt-get update 
 
 # 更新系统
-#RUN apt-get upgrade -y
+RUN apt-get upgrade -y
 #RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
 RUN apt-get install -y \
 	apt-utils \
+	autojump \
 	build-essential \
 	ca-certificates \
 	curl \
@@ -47,6 +48,7 @@ RUN apt-get install -y \
 	python \
     sudo \
 	tmux \
+	vim \
 	wget \
 	zsh
 
@@ -86,8 +88,16 @@ WORKDIR /home/$NON_ROOT/
 RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
 
 # 设置tmux
+WORKDIR /home/$NON_ROOT/
 RUN git clone https://github.com/iPersona/tmux.git .tmux
 WORKDIR .tmux
+RUN chmod 755 init.sh
+RUN ./init.sh
+
+# 设置VIM
+WORKDIR /home/$NON_ROOT/
+RUN git clone https://github.com/iPersona/vimrc.git .vim
+WORKDIR .vim
 RUN chmod 755 init.sh
 RUN ./init.sh
 
@@ -124,7 +134,8 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN npm install -g ethereumjs-testrpc truffle
 
 
-
+# 进入主目录
+WORKDIR /home/$NON_ROOT/
 
 	    
 
