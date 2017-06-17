@@ -133,6 +133,8 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # 安装以太坊环境
 RUN npm install -g ethereumjs-testrpc truffle
 
+# 安装solidity
+RUN npm install -g solc
 
 # 进入主目录
 WORKDIR /home/$NON_ROOT/
