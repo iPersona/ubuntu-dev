@@ -50,6 +50,7 @@ RUN apt-get install -y \
 	tmux \
 	vim \
 	wget \
+	xsel \
 	zsh
 
 # 创建非root用户
